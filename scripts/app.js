@@ -9,16 +9,19 @@ document.querySelectorAll('.current-year').forEach(span => {
   span.textContent = new Date().getFullYear();
 });
 
-navSwitchers.forEach(btn => {
-  btn.addEventListener('click', () => {
-    switchView(btn.dataset.switch);
+navSwitchers.forEach(link => {
+  link.addEventListener('click', event => {
+    event.preventDefault();
+    switchView(link.dataset.switch);
   });
 });
 
-// allow hero call-to-action button to trigger slide
 document.querySelectorAll('[data-switch]').forEach(el => {
   if (!el.classList.contains('nav-link')) {
-    el.addEventListener('click', () => switchView(el.dataset.switch));
+    el.addEventListener('click', event => {
+      event.preventDefault();
+      switchView(el.dataset.switch);
+    });
   }
 });
 
@@ -95,8 +98,6 @@ switchView(initialView, { focus: false, updateHash: false });
 requestAnimationFrame(() => {
   viewTrack.classList.remove('no-animation');
 });
-
-// Project loading + modal logic ---------------------------------------------
 
 const projectsGrid = document.getElementById('projects-grid');
 const modal = document.getElementById('project-modal');

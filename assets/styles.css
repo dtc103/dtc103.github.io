@@ -357,6 +357,13 @@ main {
 
 .project-grid {
   margin-top: var(--spacing-10);
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+@media (min-width: 1024px) {
+  .project-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
 
 .project-card {
