@@ -1,3 +1,103 @@
+const viewWrapper = document.querySelector('.view-wrapper');
+const viewTrack = document.querySelector('.view-track');
+const views = document.querySelectorAll('.view');
+const navSwitchers = document.querySelectorAll('.nav-link[data-switch]');
+const aboutHeading = document.getElementById('about-heading');
+const projectsHeading = document.getElementById('projects-heading');
+
+document.querySelectorAll('.current-year').forEach(span => {
+  span.textContent = new Date().getFullYear();
+});
+
+navSwitchers.forEach(btn => {
+  btn.addEventListener('click', () => {
+    switchView(btn.dataset.switch);
+  });
+});
+
+// allow hero call-to-action button to trigger slide
+document.querySelectorAll('[data-switch]').forEach(el => {
+  if (!el.classList.contains('nav-link')) {
+    el.addEventListener('click', () => switchView(el.dataset.switch));
+  }
+});
+
+window.addEventListener('hashchange', () => {
+  const target = window.location.hash === '#projects' ? 'projects' : 'about';
+  switchView(target, { focus: false, updateHash: false });
+});
+
+let currentView = null;
+
+function switchView(target, options = {}) {
+  const { focus = true, updateHash = true } = options;
+  if (target !== 'projects') {
+    target = 'about';
+  }
+
+  if (currentView === target) {
+    if (updateHash) {
+      updateHashFragment(target);
+    }
+    if (focus) {
+      focusHeading(target);
+    }
+    return;
+  }
+
+  currentView = target;
+
+  viewWrapper.classList.toggle('show-projects', target === 'projects');
+
+  views.forEach(view => {
+    const isActive = view.dataset.view === target;
+    view.setAttribute('aria-hidden', String(!isActive));
+  });
+
+  navSwitchers.forEach(btn => {
+    const isActive = btn.dataset.switch === target;
+    btn.classList.toggle('active', isActive);
+    if (isActive) {
+      btn.setAttribute('aria-current', 'page');
+    } else {
+      btn.removeAttribute('aria-current');
+    }
+  });
+
+  if (updateHash) {
+    updateHashFragment(target);
+  }
+
+  if (focus) {
+    focusHeading(target);
+  }
+}
+
+function updateHashFragment(target) {
+  const { pathname, search, hash } = window.location;
+  if (target === 'projects') {
+    if (hash !== '#projects') {
+      history.replaceState(null, '', `${pathname}${search}#projects`);
+    }
+  } else if (hash) {
+    history.replaceState(null, '', `${pathname}${search}`);
+  }
+}
+
+function focusHeading(target) {
+  const heading = target === 'projects' ? projectsHeading : aboutHeading;
+  heading?.focus();
+}
+
+const initialView = window.location.hash === '#projects' ? 'projects' : 'about';
+viewTrack.classList.add('no-animation');
+switchView(initialView, { focus: false, updateHash: false });
+requestAnimationFrame(() => {
+  viewTrack.classList.remove('no-animation');
+});
+
+// Project loading + modal logic ---------------------------------------------
+
 const projectsGrid = document.getElementById('projects-grid');
 const modal = document.getElementById('project-modal');
 const modalTitle = modal.querySelector('.modal-title');
@@ -5,11 +105,15 @@ const modalYear = modal.querySelector('.modal-year');
 const modalTags = modal.querySelector('.modal-tags');
 const modalContent = modal.querySelector('.modal-markdown');
 const modalLinks = modal.querySelector('.modal-links');
-
 const closeModalElements = modal.querySelectorAll('[data-close-modal]');
+const modalCloseButton = modal.querySelector('.modal-close');
+
 let currentProject = null;
+let lastFocusedElement = null;
 
 async function loadProjects() {
+  if (!projectsGrid) return;
+
   try {
     const response = await fetch('./content/projects/projects.json', {
       headers: { 'Cache-Control': 'no-store' }
@@ -71,7 +175,9 @@ async function openProject(project) {
   toggleModal(true);
 
   try {
-    const response = await fetch(`./content/projects/${project.file}`, { headers: { 'Cache-Control': 'no-store' } });
+    const response = await fetch(`./content/projects/${project.file}`, {
+      headers: { 'Cache-Control': 'no-store' }
+    });
     if (!response.ok) throw new Error(`Unable to load ${project.file}`);
 
     const markdown = await response.text();
@@ -113,14 +219,17 @@ function renderLinks(links = [], wrapper) {
 }
 
 function toggleModal(open) {
-  modal.setAttribute('aria-hidden', String(!open));
   if (open) {
+    lastFocusedElement = document.activeElement;
+    modal.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
-    modal.querySelector('.modal-content').focus?.();
+    modalCloseButton.focus();
   } else {
+    modal.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
     modalContent.innerHTML = '';
     currentProject = null;
+    lastFocusedElement?.focus();
   }
 }
 

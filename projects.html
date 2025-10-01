@@ -2,75 +2,18 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta http-equiv="refresh" content="0; url=./index.html#projects" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Your Name · Research Projects</title>
-  <meta name="description" content="Research projects by Your Name." />
+  <title>Redirecting to Projects · Your Name</title>
   <link rel="stylesheet" href="./assets/styles.css" />
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" defer></script>
-  <script src="./scripts/projects.js" defer></script>
-</head>
-<body>
-  <header class="site-header">
-    <div class="brand">
-      <div class="logo">YN</div>
-      <div>
-        <p class="brand-name">Your Name</p>
-        <p class="brand-role">Computer Scientist · Researcher</p>
-      </div>
-    </div>
-    <nav class="navigation">
-      <a href="./index.html">About</a>
-      <a href="./projects.html" class="active">Projects</a>
-      <a href="mailto:you@example.com">Contact</a>
-    </nav>
-  </header>
-
-  <main>
-    <section class="section-heading">
-      <h1>Research Projects</h1>
-      <p>
-        A curated collection of the research initiatives I’ve led or contributed to.
-        Select any project to explore methodology, outcomes, and related resources.
-      </p>
-    </section>
-
-    <section id="projects-grid" class="card-grid project-grid" aria-live="polite">
-      <!-- Cards get injected here -->
-    </section>
-
-    <template id="project-card-template">
-      <article class="card project-card" tabindex="0">
-        <p class="project-year"></p>
-        <h2 class="project-title"></h2>
-        <p class="project-summary"></p>
-        <div class="project-tags"></div>
-        <button class="btn tertiary">Open details</button>
-      </article>
-    </template>
-  </main>
-
-  <div id="project-modal" class="modal" role="dialog" aria-modal="true" aria-hidden="true">
-    <div class="modal-backdrop" data-close-modal></div>
-    <div class="modal-content" role="document">
-      <button class="modal-close" aria-label="Close project details" data-close-modal>&times;</button>
-      <div class="modal-body">
-        <header class="modal-header">
-          <p class="modal-year"></p>
-          <h2 class="modal-title"></h2>
-          <div class="modal-tags"></div>
-        </header>
-        <section class="modal-markdown"></section>
-        <footer class="modal-links"></footer>
-      </div>
-    </div>
-  </div>
-
-  <footer class="site-footer">
-    <p>© <span id="year"></span> Your Name. All rights reserved.</p>
-  </footer>
-
   <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
+    window.location.replace('./index.html#projects');
   </script>
+</head>
+<body class="redirect-page">
+  <main class="redirect-message">
+    <p>You’re being redirected to the projects view…</p>
+    <p><a href="./index.html#projects">Click here</a> if it doesn’t happen automatically.</p>
+  </main>
 </body>
 </html>
