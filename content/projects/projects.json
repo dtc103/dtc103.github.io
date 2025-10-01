@@ -1,0 +1,36 @@
+[
+  {
+    "title": "Neural Style Transfer for Medical Imaging",
+    "summary": "Using neural style transfer to enhance readability of low-contrast radiology scans.",
+    "year": "2024",
+    "tags": ["Deep Learning", "Medical Imaging", "Computer Vision"],
+    "file": "neural-style-transfer.md",
+    "links": [
+      {
+        "label": "Publication",
+        "url": "https://doi.org/10.xxxx/abcd1234"
+      },
+      {
+        "label": "Source Code",
+        "url": "https://github.com/yourusername/medical-style-transfer"
+      }
+    ]
+  },
+  {
+    "title": "Graph Learning for Scientific Collaboration",
+    "summary": "Modeling research collaboration networks to uncover emerging interdisciplinary trends.",
+    "year": "2023",
+    "tags": ["Graph ML", "Network Science", "Data Visualization"],
+    "file": "graph-learning.md",
+      "links": [
+        {
+          "label": "Preprint",
+          "url": "https://arxiv.org/abs/1234.56789"
+        },
+        {
+          "label": "Talk Slides",
+          "url": "https://yourdomain.com/slides/graph-collaboration.pdf"
+        }
+      ]
+  }
+]
