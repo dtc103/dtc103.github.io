@@ -76,8 +76,8 @@ main {
 
 .view-track {
   display: flex;
-  width: 200%;
-  transition: transform 0.6s cubic-bezier(0.7, 0, 0.3, 1);
+  transition: transform 0.55s cubic-bezier(0.45, 0, 0.15, 1);
+  transform: translate3d(0, 0, 0);
   will-change: transform;
 }
 
@@ -86,11 +86,12 @@ main {
 }
 
 .view-wrapper.show-projects .view-track {
-  transform: translateX(-100%);
+  transform: translate3d(-100%, 0, 0);
 }
 
 .view {
-  min-width: 100%;
+  flex: 0 0 100%;
+  max-width: 100%;
   display: flex;
   justify-content: center;
 }
@@ -117,6 +118,8 @@ main {
   align-items: center;
   gap: var(--spacing-4);
   backdrop-filter: blur(12px);
+  position: relative;
+  z-index: 10;
 }
 
 .brand {
@@ -541,10 +544,6 @@ main {
   .hero-actions {
     flex-direction: column;
     align-items: stretch;
-  }
-
-  .view-track {
-    width: 200%;
   }
 
   .modal-content {
