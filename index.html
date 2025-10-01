@@ -18,103 +18,155 @@
       </div>
     </div>
     <nav class="navigation">
-      <a href="./index.html" class="active">About</a>
-      <a href="./projects.html">Projects</a>
-      <a href="mailto:you@example.com">Contact</a>
+      <button class="nav-link active" type="button" data-switch="about" aria-current="page">About</button>
+      <button class="nav-link" type="button" data-switch="projects">Projects</button>
+      <a class="nav-link" href="mailto:you@example.com">Contact</a>
     </nav>
   </header>
 
   <main>
-    <section class="hero">
-      <div class="hero-text">
-        <p class="eyebrow">👋 Hi, I'm</p>
-        <h1>Your Name</h1>
-        <p class="subtitle">
-          Computer science major specializing in <strong>machine learning</strong> and <strong>data-driven systems</strong>.
-          I love building research prototypes that bridge theory and real-world impact.
-        </p>
-        <div class="hero-actions">
-          <a class="btn primary" href="./projects.html">View Research Portfolio</a>
-          <a class="btn secondary" href="mailto:you@example.com">Get in touch</a>
-        </div>
-      </div>
-      <div class="hero-card">
-        <h2>At a glance</h2>
-        <ul>
-          <li><span>🎓</span> M.Sc. Computer Science @ Your University</li>
-          <li><span>🔬</span> Research areas: Machine Learning, HCI, Systems</li>
-          <li><span>🛠️</span> Tools: Python, PyTorch, Rust, React</li>
-          <li><span>🚀</span> Currently exploring data-centric AI tooling</li>
-        </ul>
-      </div>
-    </section>
+    <div class="view-wrapper">
+      <div class="view-track">
+        <section class="view about-view" data-view="about" aria-hidden="false">
+          <div class="view-content">
+            <section class="hero">
+              <div class="hero-text">
+                <p class="eyebrow">👋 Hi, I'm</p>
+                <h1 id="about-heading" tabindex="-1">Your Name</h1>
+                <p class="subtitle">
+                  Computer science major specializing in <strong>machine learning</strong> and
+                  <strong>data-driven systems</strong>. I love building research prototypes that bridge theory and
+                  real-world impact.
+                </p>
+                <div class="hero-actions">
+                  <button class="btn primary" type="button" data-switch="projects">
+                    View Research Portfolio
+                  </button>
+                  <a class="btn secondary" href="mailto:you@example.com">Get in touch</a>
+                </div>
+              </div>
+              <div class="hero-card">
+                <h2>At a glance</h2>
+                <ul>
+                  <li><span>🎓</span> M.Sc. Computer Science @ Your University</li>
+                  <li><span>🔬</span> Research areas: Machine Learning, HCI, Systems</li>
+                  <li><span>🛠️</span> Tools: Python, PyTorch, Rust, React</li>
+                  <li><span>🚀</span> Currently exploring data-centric AI tooling</li>
+                </ul>
+              </div>
+            </section>
 
-    <section class="highlights">
-      <div class="section-heading">
-        <h2>What I do</h2>
-        <p>
-          I translate cutting-edge research into polished prototypes, collaborate with interdisciplinary teams,
-          and communicate technical insights to diverse audiences.
-        </p>
-      </div>
+            <section class="highlights">
+              <div class="section-heading">
+                <h2>What I do</h2>
+                <p>
+                  I translate cutting-edge research into polished prototypes, collaborate with interdisciplinary teams,
+                  and communicate technical insights to diverse audiences.
+                </p>
+              </div>
 
-      <div class="card-grid">
-        <article class="card">
-          <div class="card-icon">🧠</div>
-          <h3>Applied Research</h3>
-          <p>Designing experiments, running evaluations, and publishing reproducible findings.</p>
-        </article>
-        <article class="card">
-          <div class="card-icon">🧩</div>
-          <h3>Systems Thinking</h3>
-          <p>Architecting scalable ML pipelines and tooling with reliability in mind.</p>
-        </article>
-        <article class="card">
-          <div class="card-icon">💬</div>
-          <h3>Technical Communication</h3>
-          <p>From papers to presentations, I enjoy making complex topics approachable.</p>
-        </article>
-      </div>
-    </section>
+              <div class="card-grid">
+                <article class="card">
+                  <div class="card-icon">🧠</div>
+                  <h3>Applied Research</h3>
+                  <p>Designing experiments, running evaluations, and publishing reproducible findings.</p>
+                </article>
+                <article class="card">
+                  <div class="card-icon">🧩</div>
+                  <h3>Systems Thinking</h3>
+                  <p>Architecting scalable ML pipelines and tooling with reliability in mind.</p>
+                </article>
+                <article class="card">
+                  <div class="card-icon">💬</div>
+                  <h3>Technical Communication</h3>
+                  <p>From papers to presentations, I enjoy making complex topics approachable.</p>
+                </article>
+              </div>
+            </section>
 
-    <section class="social">
-      <h2>Find me online</h2>
-      <p>Connect, collaborate, or just say hello.</p>
-      <div class="social-links">
-        <a href="https://github.com/yourusername" aria-label="GitHub">
-          <svg role="img" viewBox="0 0 24 24" class="icon">
-            <title>GitHub</title>
-            <path d="M12 0C5.372 0 0 5.373 0 12a12 12 0 008.207 11.385c.6.113.793-.258.793-.577v-2.02c-3.338.727-4.033-1.61-4.033-1.61-.546-1.388-1.333-1.758-1.333-1.758-1.09-.745.082-.73.082-.73 1.205.085 1.84 1.239 1.84 1.239 1.07 1.834 2.807 1.304 3.492.997.108-.776.418-1.305.762-1.605-2.665-.305-5.467-1.334-5.467-5.93 0-1.31.468-2.381 1.236-3.221-.124-.303-.536-1.523.117-3.176 0 0 1.008-.322 3.3 1.23a11.52 11.52 0 016.004 0c2.29-1.552 3.297-1.23 3.297-1.23.655 1.653.243 2.873.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.623-5.48 5.921.43.372.823 1.102.823 2.222v3.293c0 .322.192.694.807.576A12.006 12.006 0 0024 12c0-6.627-5.373-12-12-12z" />
-          </svg>
-        </a>
-        <a href="https://www.linkedin.com/in/yourusername" aria-label="LinkedIn">
-          <svg role="img" viewBox="0 0 24 24" class="icon">
-            <title>LinkedIn</title>
-            <path d="M20.447 20.452H17.3v-5.57c0-1.328-.026-3.036-1.852-3.036-1.853 0-2.136 1.445-2.136 2.939v5.667H10.17V9h3.017v1.561h.043c.421-.8 1.45-1.648 2.986-1.648 3.193 0 3.782 2.102 3.782 4.836v6.703zM5.337 7.433a1.75 1.75 0 110-3.5 1.75 1.75 0 010 3.5zM6.785 20.452H3.89V9h2.895v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.727v20.545C0 23.225.792 24 1.77 24h20.455C23.204 24 24 23.225 24 22.273V1.727C24 .774 23.204 0 22.225 0z" />
-          </svg>
-        </a>
-        <a href="https://twitter.com/yourusername" aria-label="X (Twitter)">
-          <svg role="img" viewBox="0 0 24 24" class="icon">
-            <title>X</title>
-            <path d="M18.244 2.25h3.308l-7.227 8.254 8.502 11.246H17.17l-5.275-6.934-6.03 6.934H2.557l7.73-8.897L2.25 2.25h6.154l4.73 6.231 5.11-6.231zm-1.161 17.52h1.833L7.047 4.39H5.081L17.083 19.77z" />
-          </svg>
-        </a>
-        <a href="https://scholar.google.com/citations?user=yourid" aria-label="Google Scholar">
-          <svg role="img" viewBox="0 0 24 24" class="icon">
-            <title>Google Scholar</title>
-            <path d="M12 3L1 9l11 6 9-4.909V18h2V9L12 3zm0 8L5.5 9 12 5l6.5 4L12 11zm-3 4v4.5l3 1.5 3-1.5V15l-3 1.5L9 15z" />
-          </svg>
-        </a>
+            <section class="social">
+              <h2>Find me online</h2>
+              <p>Connect, collaborate, or just say hello.</p>
+              <div class="social-links">
+                <a href="https://github.com/yourusername" aria-label="GitHub">
+                  <svg role="img" viewBox="0 0 24 24" class="icon">
+                    <title>GitHub</title>
+                    <path d="M12 0C5.372 0 0 5.373 0 12a12 12 0 008.207 11.385c.6.113.793-.258.793-.577v-2.02c-3.338.727-4.033-1.61-4.033-1.61-.546-1.388-1.333-1.758-1.333-1.758-1.09-.745.082-.73.082-.73 1.205.085 1.84 1.239 1.84 1.239 1.07 1.834 2.807 1.304 3.492.997.108-.776.418-1.305.762-1.605-2.665-.305-5.467-1.334-5.467-5.93 0-1.31.468-2.381 1.236-3.221-.124-.303-.536-1.523.117-3.176 0 0 1.008-.322 3.3 1.23a11.52 11.52 0 016.004 0c2.29-1.552 3.297-1.23 3.297-1.23.655 1.653.243 2.873.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.623-5.48 5.921.43.372.823 1.102.823 2.222v3.293c0 .322.192.694.807.576A12.006 12.006 0 0024 12c0-6.627-5.373-12-12-12z" />
+                  </svg>
+                </a>
+                <a href="https://www.linkedin.com/in/yourusername" aria-label="LinkedIn">
+                  <svg role="img" viewBox="0 0 24 24" class="icon">
+                    <title>LinkedIn</title>
+                    <path d="M20.447 20.452H17.3v-5.57c0-1.328-.026-3.036-1.852-3.036-1.853 0-2.136 1.445-2.136 2.939v5.667H10.17V9h3.017v1.561h.043c.421-.8 1.45-1.648 2.986-1.648 3.193 0 3.782 2.102 3.782 4.836v6.703zM5.337 7.433a1.75 1.75 0 110-3.5 1.75 1.75 0 010 3.5zM6.785 20.452H3.89V9h2.895v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.727v20.545C0 23.225.792 24 1.77 24h20.455C23.204 24 24 23.225 24 22.273V1.727C24 .774 23.204 0 22.225 0z" />
+                  </svg>
+                </a>
+                <a href="https://twitter.com/yourusername" aria-label="X (Twitter)">
+                  <svg role="img" viewBox="0 0 24 24" class="icon">
+                    <title>X</title>
+                    <path d="M18.244 2.25h3.308l-7.227 8.254 8.502 11.246H17.17l-5.275-6.934-6.03 6.934H2.557l7.73-8.897L2.25 2.25h6.154l4.73 6.231 5.11-6.231zm-1.161 17.52h1.833L7.047 4.39H5.081L17.083 19.77z" />
+                  </svg>
+                </a>
+                <a href="https://scholar.google.com/citations?user=yourid" aria-label="Google Scholar">
+                  <svg role="img" viewBox="0 0 24 24" class="icon">
+                    <title>Google Scholar</title>
+                    <path d="M12 3L1 9l11 6 9-4.909V18h2V9L12 3zm0 8L5.5 9 12 5l6.5 4L12 11zm-3 4v4.5l3 1.5 3-1.5V15l-3 1.5L9 15z" />
+                  </svg>
+                </a>
+              </div>
+            </section>
+          </div>
+        </section>
+
+        <section class="view projects-view" data-view="projects" aria-hidden="true">
+          <div class="view-content">
+            <section class="section-heading">
+              <h1 id="projects-heading" tabindex="-1">Research Projects</h1>
+              <p>
+                A curated collection of the research initiatives I’ve led or contributed to.
+                Select any project to explore methodology, outcomes, and related resources.
+              </p>
+            </section>
+
+            <section id="projects-grid" class="card-grid project-grid" aria-live="polite">
+              <!-- Project cards injected here -->
+            </section>
+
+            <template id="project-card-template">
+              <article class="card project-card" tabindex="0">
+                <p class="project-year"></p>
+                <h2 class="project-title"></h2>
+                <p class="project-summary"></p>
+                <div class="project-tags"></div>
+                <button class="btn tertiary" type="button">Open details</button>
+              </article>
+            </template>
+          </div>
+        </section>
       </div>
-    </section>
+    </div>
   </main>
 
+  <div id="project-modal" class="modal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-backdrop" data-close-modal></div>
+    <div class="modal-content" role="document">
+      <button class="modal-close" type="button" aria-label="Close project details" data-close-modal>&times;</button>
+      <div class="modal-body">
+        <header class="modal-header">
+          <p class="modal-year"></p>
+          <h2 class="modal-title"></h2>
+          <div class="modal-tags"></div>
+        </header>
+        <section class="modal-markdown"></section>
+        <footer class="modal-links"></footer>
+      </div>
+    </div>
+  </div>
+
   <footer class="site-footer">
-    <p>© <span id="year"></span> Your Name. Built with care and Markdown.</p>
+    <p>© <span class="current-year"></span> Your Name. Built with care and Markdown.</p>
   </footer>
 
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" defer></script>
+  <script src="./scripts/app.js" defer></script>
 </body>
 </html>

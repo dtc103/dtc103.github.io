@@ -55,16 +55,53 @@ a:focus-visible {
   color: var(--accent);
 }
 
-img {
-  max-width: 100%;
-  height: auto;
+button {
+  font: inherit;
+  color: inherit;
 }
 
 main {
-  width: min(1100px, 92vw);
-  margin: 0 auto;
-  padding: var(--spacing-12) 0;
   flex: 1;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 0;
+}
+
+.view-wrapper {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.view-track {
+  display: flex;
+  width: 200%;
+  transition: transform 0.6s cubic-bezier(0.7, 0, 0.3, 1);
+  will-change: transform;
+}
+
+.view-track.no-animation {
+  transition: none !important;
+}
+
+.view-wrapper.show-projects .view-track {
+  transform: translateX(-100%);
+}
+
+.view {
+  min-width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.view-content {
+  width: min(1100px, 92vw);
+  padding: var(--spacing-12) 0;
+}
+
+.view-content > .section-heading:first-of-type {
+  margin-top: 0;
 }
 
 .site-header {
@@ -117,18 +154,26 @@ main {
   gap: var(--spacing-4);
 }
 
-.navigation a {
+.navigation .nav-link {
   padding: 0.35rem 0.75rem;
   border-radius: 999px;
-  transition: background 0.2s ease, color 0.2s ease;
+  border: 1px solid transparent;
+  background: transparent;
   color: var(--fg-muted);
+  transition: background 0.2s ease, color 0.2s ease, border 0.2s ease;
+  cursor: pointer;
+  font-size: 0.95rem;
 }
 
-.navigation a.active,
-.navigation a:hover,
-.navigation a:focus-visible {
+.navigation .nav-link.active,
+.navigation .nav-link:hover,
+.navigation .nav-link:focus-visible {
   background: var(--accent-muted);
   color: var(--accent);
+}
+
+.navigation .nav-link[data-switch] {
+  border-color: transparent;
 }
 
 .hero {
@@ -464,6 +509,19 @@ main {
   border: 1px solid transparent;
 }
 
+.redirect-page {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  background: #000;
+  color: var(--fg);
+}
+
+.redirect-message {
+  text-align: center;
+  padding: var(--spacing-8);
+}
+
 @media (max-width: 720px) {
   .site-header {
     padding: var(--spacing-4);
@@ -478,8 +536,18 @@ main {
     align-items: stretch;
   }
 
+  .view-track {
+    width: 200%;
+  }
+
   .modal-content {
     margin: 4vh auto;
     max-height: 92vh;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .view-track {
+    transition: none !important;
   }
 }
