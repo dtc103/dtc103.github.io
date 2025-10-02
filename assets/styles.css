@@ -312,6 +312,7 @@ main {
 
 .project-grid {
   margin-top: var(--spacing-10);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .project-card {
