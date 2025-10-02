@@ -8,6 +8,34 @@ const tabs = {
 let active = null;
 const FOCUS_DELAY = 250;
 
+// Header hide/show on scroll
+const header = document.querySelector('.site-header');
+let lastScrollY = window.scrollY;
+let scrollTicking = false;
+const SCROLL_DELTA = 6;
+
+function updateHeaderOnScroll() {
+  const currentY = window.scrollY;
+  const scrolledDown = currentY > lastScrollY + SCROLL_DELTA;
+  const scrolledUp = currentY < lastScrollY - SCROLL_DELTA;
+
+  if (currentY <= 0 || scrolledUp) {
+    document.body.classList.remove('header-hidden');
+  } else if (scrolledDown) {
+    document.body.classList.add('header-hidden');
+  }
+
+  lastScrollY = currentY;
+  scrollTicking = false;
+}
+
+window.addEventListener('scroll', () => {
+  if (!scrollTicking) {
+    scrollTicking = true;
+    requestAnimationFrame(updateHeaderOnScroll);
+  }
+});
+
 // Modal refs (same as before)
 const modal = document.getElementById('project-modal');
 const modalTitle = modal.querySelector('.modal-title');
@@ -23,6 +51,9 @@ const projectsGrid = document.getElementById('projects-grid');
 
 function setActive(view, push = true) {
   if (!track || !tabs[view] || view === active) return;
+
+  // Ensure header is visible when navigating programmatically
+  document.body.classList.remove('header-hidden');
 
   const index = view === 'about' ? 0 : 1;
   track.style.setProperty('--active-index', index);
