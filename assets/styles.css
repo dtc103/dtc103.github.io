@@ -26,8 +26,8 @@
   --radius-md: 16px;
   --radius-sm: 10px;
 
-  --header-width: 70%;
-  --project-colums: 2;
+  --header-width: 100%;
+  --project-colums: 3;
   --card-columns: 2;
 
   /* Transitions */
