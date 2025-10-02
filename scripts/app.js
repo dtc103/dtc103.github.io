@@ -4,6 +4,8 @@ const views = document.querySelectorAll('.view');
 const navSwitchers = document.querySelectorAll('.nav-link[data-switch]');
 const aboutHeading = document.getElementById('about-heading');
 const projectsHeading = document.getElementById('projects-heading');
+const header = document.querySelector('.site-header');
+const footer = document.querySelector('.site-footer');
 
 document.querySelectorAll('.current-year').forEach(span => {
   span.textContent = new Date().getFullYear();
@@ -33,24 +35,24 @@ window.addEventListener('hashchange', () => {
 let currentView = null;
 
 function switchView(target, options = {}) {
-  const { focus = true, updateHash = true } = options;
-  if (target !== 'projects') {
-    target = 'about';
+  const { focus = true, updateHash = true, animate = true } = options;
+  target = target === 'projects' ? 'projects' : 'about';
+
+  const alreadyActive = currentView === target;
+
+  if (!animate) {
+    viewTrack.classList.add('no-animation');
+  } else {
+    viewTrack.classList.remove('no-animation');
   }
 
-  if (currentView === target) {
-    if (updateHash) {
-      updateHashFragment(target);
-    }
-    if (focus) {
-      focusHeading(target);
-    }
-    return;
+  viewWrapper.dataset.activeView = target;
+
+  if (!alreadyActive) {
+    currentView = target;
   }
 
-  currentView = target;
-
-  viewWrapper.classList.toggle('show-projects', target === 'projects');
+  updateWrapperHeight({ animate });
 
   views.forEach(view => {
     const isActive = view.dataset.view === target;
@@ -74,6 +76,10 @@ function switchView(target, options = {}) {
   if (focus) {
     focusHeading(target);
   }
+
+  if (!animate) {
+    requestAnimationFrame(() => viewTrack.classList.remove('no-animation'));
+  }
 }
 
 function updateHashFragment(target) {
@@ -92,12 +98,63 @@ function focusHeading(target) {
   heading?.focus();
 }
 
+function parsePx(value) {
+  return Number.parseFloat(value) || 0;
+}
+
+function updateWrapperHeight({ animate = true } = {}) {
+  const activeKey = currentView || 'about';
+  const activeView = document.querySelector(`.view[data-view="${activeKey}"]`);
+  if (!activeView) return;
+
+  const headerStyles = getComputedStyle(header);
+  const headerSpacing =
+    header.offsetHeight +
+    parsePx(headerStyles.marginTop) +
+    parsePx(headerStyles.marginBottom);
+
+  const footerHeight = footer.offsetHeight;
+  const extraGap = 48;
+
+  const minHeight = Math.max(
+    window.innerHeight - headerSpacing - footerHeight - extraGap,
+    320
+  );
+
+  const activeHeight = activeView.offsetHeight;
+  const finalHeight = Math.max(activeHeight, minHeight);
+
+  if (!animate) {
+    viewWrapper.classList.add('no-height-transition');
+  } else {
+    viewWrapper.classList.remove('no-height-transition');
+  }
+
+  viewWrapper.style.setProperty('--wrapper-height', `${finalHeight}px`);
+
+  if (!animate) {
+    requestAnimationFrame(() => viewWrapper.classList.remove('no-height-transition'));
+  }
+}
+
 const initialView = window.location.hash === '#projects' ? 'projects' : 'about';
-viewTrack.classList.add('no-animation');
-switchView(initialView, { focus: false, updateHash: false });
-requestAnimationFrame(() => {
-  viewTrack.classList.remove('no-animation');
+switchView(initialView, { focus: false, updateHash: false, animate: false });
+
+window.addEventListener('resize', () => updateWrapperHeight());
+
+const resizeObserver = new ResizeObserver(entries => {
+  if (!currentView) return;
+  for (const entry of entries) {
+    if (entry.target.dataset.view === currentView) {
+      updateWrapperHeight();
+      break;
+    }
+  }
 });
+
+views.forEach(view => resizeObserver.observe(view));
+
+// Project loading + modal logic ---------------------------------------------
 
 const projectsGrid = document.getElementById('projects-grid');
 const modal = document.getElementById('project-modal');
@@ -161,6 +218,10 @@ function renderProjects(projects) {
 
     projectsGrid.appendChild(card);
   });
+
+  if (currentView === 'projects') {
+    updateWrapperHeight();
+  }
 }
 
 async function openProject(project) {

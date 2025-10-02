@@ -72,12 +72,23 @@ main {
   width: 100%;
   overflow: hidden;
   position: relative;
+  --wrapper-height: auto;
+  height: var(--wrapper-height);
+  transition: height 0.45s cubic-bezier(0.45, 0, 0.15, 1);
+}
+
+.view-wrapper.no-height-transition {
+  transition: none !important;
 }
 
 .view-track {
-  display: flex;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 100%;
+  align-items: stretch;
+  --track-offset: 0%;
+  transform: translate3d(var(--track-offset), 0, 0);
   transition: transform 0.55s cubic-bezier(0.45, 0, 0.15, 1);
-  transform: translate3d(0, 0, 0);
   will-change: transform;
 }
 
@@ -85,13 +96,15 @@ main {
   transition: none !important;
 }
 
-.view-wrapper.show-projects .view-track {
-  transform: translate3d(-100%, 0, 0);
+.view-wrapper[data-active-view="projects"] .view-track {
+  --track-offset: -100%;
+}
+
+.view-wrapper[data-active-view="about"] .view-track {
+  --track-offset: 0%;
 }
 
 .view {
-  flex: 0 0 100%;
-  max-width: 100%;
   display: flex;
   justify-content: center;
 }
@@ -353,7 +366,7 @@ main {
 }
 
 .site-footer {
-  padding: var(--spacing-8) 0;
+  padding: var(--spacing-8) 0 var(--spacing-10);
   text-align: center;
   color: var(--fg-muted);
 }
@@ -553,7 +566,8 @@ main {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .view-track {
+  .view-track,
+  .view-wrapper {
     transition: none !important;
   }
 }
