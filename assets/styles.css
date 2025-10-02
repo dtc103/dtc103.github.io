@@ -117,7 +117,7 @@ main {
    Header & Navigation
 ------------------------------ */
 .site-header {
-  width: 75%; /*min(75%, var(--max-width));*/
+  width: 75%;/*min(75%, var(--max-width));*/
   margin: 0 auto;
   padding: 1.5rem var(--gutter);
   display: flex;
@@ -340,7 +340,7 @@ main {
 .card-grid {
   display: grid;
   gap: 1.75rem;
-  grid-template-columns: repeat(2, minmax(260px, 1fr));
+  grid-template-columns: repeat(3, minmax(260px, 1fr));
 }
 
 .card {
