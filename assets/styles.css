@@ -165,7 +165,7 @@ main {
    Header & Navigation
 ------------------------------ */
 .site-header {
-  width: 75%;
+  width: 100%;
   margin: 0 auto;
   padding: 1.5rem var(--gutter);
   display: flex;
