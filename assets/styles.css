@@ -100,6 +100,53 @@ main {
   margin: 1rem auto 0;
 }
 
+/* Views slider */
+.views-viewport {
+  width: min(100%, var(--max-width));
+  margin: 0 auto;
+  padding: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.views-track {
+  display: flex;
+  width: 100%;
+  transform: translateX(calc(var(--active-index, 0) * -100%));
+  transition: transform var(--transition-base);
+  will-change: transform;
+}
+
+/* Each view is effectively a full "page" */
+.view {
+  flex: 0 0 100%;
+  min-width: 100%;
+  min-height: 100%;
+  box-sizing: border-box;
+  padding: 0 var(--gutter) 4rem;
+}
+
+.view.is-inert {
+  pointer-events: none;
+}
+
+#view-projects.view {
+  padding: clamp(3rem, 6vw, 4rem) var(--gutter) 4rem;
+}
+
+/* When Projects view is active, give it same top spacing as before */
+#view-projects .section-heading {
+  max-width: 680px;
+  margin: 0 auto 3rem;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .views-viewport {
+    padding-bottom: 0;
+  }
+}
+
 /* ------------------------------
    Page-specific adjustments
 ------------------------------ */
@@ -117,7 +164,7 @@ main {
    Header & Navigation
 ------------------------------ */
 .site-header {
-  width: 75%;/*min(75%, var(--max-width));*/
+  width: 75%;
   margin: 0 auto;
   padding: 1.5rem var(--gutter);
   display: flex;
@@ -205,7 +252,7 @@ main {
 .hero-text .eyebrow {
   text-transform: uppercase;
   letter-spacing: 0.22em;
-  font-size: 1.0rem;
+  font-size: 1rem;
   color: var(--color-text-muted);
   margin-bottom: 1rem;
 }
@@ -341,6 +388,10 @@ main {
   display: grid;
   gap: 1.75rem;
   grid-template-columns: repeat(3, minmax(260px, 1fr));
+}
+
+.project-grid {
+  grid-template-columns: repeat(2, minmax(280px, 1fr));
 }
 
 .card {
@@ -633,6 +684,24 @@ main {
 }
 
 /* ------------------------------
+   Redirect helper styles
+------------------------------ */
+.redirect-page {
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+  padding: 2rem;
+  text-align: center;
+  background: var(--color-bg-primary);
+  color: var(--color-text-primary);
+}
+
+.redirect-message a {
+  color: var(--color-text-primary);
+  text-decoration: underline;
+}
+
+/* ------------------------------
    Helpers
 ------------------------------ */
 .loading {
@@ -649,6 +718,12 @@ main {
 /* ------------------------------
    Responsive Tweaks
 ------------------------------ */
+@media (max-width: 1024px) {
+  .card-grid {
+    grid-template-columns: repeat(2, minmax(240px, 1fr));
+  }
+}
+
 @media (max-width: 768px) {
   .site-header {
     padding: 1.25rem var(--gutter);
@@ -672,6 +747,13 @@ main {
   .modal-content {
     width: 100%;
     max-height: 90vh;
+  }
+}
+
+@media (max-width: 640px) {
+  .card-grid,
+  .project-grid {
+    grid-template-columns: 1fr;
   }
 }
 
