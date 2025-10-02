@@ -764,7 +764,7 @@ main {
   }
 
   .hero-card {
-    order: -1;
+    order: initial;
   }
 
   .modal-content {
