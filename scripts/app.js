@@ -1,10 +1,11 @@
 // Simple SPA with sliding views and projects loader
 const track = document.querySelector('.views-track');
 const navLinks = [...document.querySelectorAll('[data-nav]')];
-const tabs = {
-  about: document.getElementById('view-about'),
-  projects: document.getElementById('view-projects')
-};
+const viewOrder = ['about', 'projects', 'contact'];
+const tabs = viewOrder.reduce((acc, view) => {
+  acc[view] = document.getElementById(`view-${view}`);
+  return acc;
+}, {});
 let active = null;
 const FOCUS_DELAY = 250;
 
@@ -52,10 +53,12 @@ const projectsGrid = document.getElementById('projects-grid');
 function setActive(view, push = true) {
   if (!track || !tabs[view] || view === active) return;
 
+  const index = viewOrder.indexOf(view);
+  if (index === -1) return;
+
   // Ensure header is visible when navigating programmatically
   document.body.classList.remove('header-hidden');
 
-  const index = view === 'about' ? 0 : 1;
   track.style.setProperty('--active-index', index);
 
   updateNavTabs(view);
@@ -121,7 +124,8 @@ function initRouter() {
 // Sliding styles driven by CSS variable
 function initTrack() {
   if (!track) return;
-  const startIndex = location.hash.replace('#', '') === 'projects' ? 1 : 0;
+  const hashView = location.hash.replace('#', '');
+  const startIndex = viewOrder.includes(hashView) ? viewOrder.indexOf(hashView) : 0;
   track.style.setProperty('--active-index', startIndex);
 }
 

@@ -135,7 +135,8 @@ main {
   pointer-events: none;
 }
 
-#view-projects.view {
+#view-projects.view,
+#view-contact.view {
   padding: clamp(3rem, 6vw, 4rem) var(--gutter) 4rem;
 }
 
@@ -549,6 +550,94 @@ body.header-hidden .site-header {
   height: 22px;
   fill: currentColor;
   color: var(--color-text-primary);
+}
+
+/* ------------------------------
+   Contact View
+------------------------------ */
+.contact {
+  margin: clamp(3rem, 6vw, 5rem) auto;
+  max-width: 720px;
+  display: grid;
+  gap: 2.5rem;
+}
+
+.contact-card {
+  padding: clamp(2rem, 4vw, 2.75rem);
+  border-radius: var(--radius-lg);
+  background: var(--gradient-gloss), var(--color-surface-alt);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 40px 60px -55px rgba(0, 0, 0, 0.85), inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+  display: grid;
+  gap: 1.75rem;
+  text-align: center;
+}
+
+.contact-identity {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.contact-name {
+  margin: 0;
+  font-size: clamp(1.85rem, 3vw, 2.4rem);
+  color: var(--color-text-primary);
+}
+
+.contact-role {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+}
+
+.contact-label {
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+
+.contact-email {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.contact-email-link {
+  font-size: 1.15rem;
+  letter-spacing: 0.04em;
+  color: var(--color-text-primary);
+  font-weight: 500;
+}
+
+.contact-email-link:hover,
+.contact-email-link:focus-visible {
+  text-decoration: underline;
+}
+
+.contact-actions {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.contact-social {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.contact-social-links {
+  gap: 1rem;
+}
+
+@media (max-width: 480px) {
+  .contact-card {
+    padding: 1.75rem;
+  }
+
+  .contact-actions {
+    gap: 0.6rem;
+  }
 }
 
 /* ------------------------------
