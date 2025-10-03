@@ -1,5 +1,6 @@
 // Simple SPA with sliding views and projects loader
 const track = document.querySelector('.views-track');
+const viewport = document.querySelector('.views-viewport');
 const navLinks = [...document.querySelectorAll('[data-nav]')];
 const viewOrder = ['about', 'projects', 'contact'];
 const tabs = viewOrder.reduce((acc, view) => {
@@ -160,6 +161,80 @@ function initTrack() {
   const hashView = location.hash.replace('#', '');
   const startIndex = viewOrder.includes(hashView) ? viewOrder.indexOf(hashView) : 0;
   track.style.setProperty('--active-index', startIndex);
+}
+
+// Touch swipe support
+const SWIPE_THRESHOLD = 60;
+const SWIPE_VERTICAL_RESTRAINT = 80;
+const SWIPE_TIME_LIMIT = 600;
+
+let swipeStartX = null;
+let swipeStartY = null;
+let swipeStartTime = 0;
+let swipePointerId = null;
+
+function goToRelativeView(offset) {
+  if (!active) return;
+  const currentIndex = viewOrder.indexOf(active);
+  const nextIndex = currentIndex + offset;
+  if (nextIndex < 0 || nextIndex >= viewOrder.length) return;
+  setActive(viewOrder[nextIndex]);
+}
+
+function onPointerDown(event) {
+  if (!viewport) return;
+  if (event.pointerType !== 'touch' && event.pointerType !== 'pen') return;
+
+  swipePointerId = event.pointerId;
+  swipeStartX = event.clientX;
+  swipeStartY = event.clientY;
+  swipeStartTime = performance.now();
+}
+
+function onPointerMove(event) {
+  if (swipePointerId !== event.pointerId) return;
+  if (swipeStartX === null || swipeStartY === null) return;
+
+  const deltaX = event.clientX - swipeStartX;
+  const deltaY = event.clientY - swipeStartY;
+
+  if (Math.abs(deltaY) > SWIPE_VERTICAL_RESTRAINT) {
+    resetSwipeState();
+  }
+
+  if (Math.abs(deltaX) >= SWIPE_THRESHOLD && Math.abs(deltaY) < SWIPE_VERTICAL_RESTRAINT) {
+    const elapsed = performance.now() - swipeStartTime;
+    if (elapsed <= SWIPE_TIME_LIMIT) {
+      goToRelativeView(deltaX < 0 ? 1 : -1);
+    }
+    resetSwipeState();
+  }
+}
+
+function onPointerUp(event) {
+  if (swipePointerId === event.pointerId) {
+    resetSwipeState();
+  }
+}
+
+function onPointerCancel(event) {
+  if (swipePointerId === event.pointerId) {
+    resetSwipeState();
+  }
+}
+
+function resetSwipeState() {
+  swipePointerId = null;
+  swipeStartX = null;
+  swipeStartY = null;
+  swipeStartTime = 0;
+}
+
+if (viewport) {
+  viewport.addEventListener('pointerdown', onPointerDown, { passive: true });
+  viewport.addEventListener('pointermove', onPointerMove, { passive: true });
+  viewport.addEventListener('pointerup', onPointerUp, { passive: true });
+  viewport.addEventListener('pointercancel', onPointerCancel, { passive: true });
 }
 
 // Projects loader
