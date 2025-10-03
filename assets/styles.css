@@ -116,8 +116,10 @@ main {
 .views-track {
   display: flex;
   width: 100%;
+  transform: translateX(calc(var(--active-index, 0) * -100%));
   transition: transform var(--transition-base), height var(--transition-base);
   will-change: transform;
+  align-items: flex-start;
 }
 
 /* Each view is effectively a full "page" */

@@ -1,6 +1,5 @@
-// Simple SPA with sliding views, swipe gestures, and projects loader
+// Simple SPA with sliding views and projects loader
 const track = document.querySelector('.views-track');
-const viewport = document.querySelector('.views-viewport');
 const navLinks = [...document.querySelectorAll('[data-nav]')];
 const viewOrder = ['about', 'projects', 'contact'];
 const tabs = viewOrder.reduce((acc, view) => {
@@ -95,8 +94,7 @@ function setActive(view, push = true) {
   updateNavTabs(view);
   updateViewStates(view);
 
-  track.style.removeProperty('transition');
-  track.style.transform = `translateX(${index * -100}%)`;
+  track.style.setProperty('--active-index', index);
   syncViewportHeight(view);
 
   active = view;
@@ -161,182 +159,7 @@ function initTrack() {
   if (!track) return;
   const hashView = location.hash.replace('#', '');
   const startIndex = viewOrder.includes(hashView) ? viewOrder.indexOf(hashView) : 0;
-  track.style.transform = `translateX(${startIndex * -100}%)`;
-}
-
-function goToRelativeView(offset) {
-  if (!active) return;
-  const currentIndex = viewOrder.indexOf(active);
-  const nextIndex = currentIndex + offset;
-  if (nextIndex < 0 || nextIndex >= viewOrder.length) return;
-  setActive(viewOrder[nextIndex]);
-}
-
-// Swipe gesture handling
-const SWIPE_TOUCH_SLOP = 12;
-const SWIPE_THRESHOLD_RATIO = 0.24;
-
-const gesture = {
-  pointerId: null,
-  startX: 0,
-  startY: 0,
-  deltaX: 0,
-  deltaY: 0,
-  orientation: null,
-  isDragging: false,
-  activeIndex: 0
-};
-
-function resetGesture() {
-  gesture.pointerId = null;
-  gesture.startX = 0;
-  gesture.startY = 0;
-  gesture.deltaX = 0;
-  gesture.deltaY = 0;
-  gesture.orientation = null;
-  gesture.isDragging = false;
-  gesture.activeIndex = 0;
-}
-
-function adjustDuringDrag(dragPercent) {
-  const currentIndex = gesture.activeIndex;
-  const currentSection = tabs[viewOrder[currentIndex]];
-  const minHeight = getMinViewportHeight();
-  let targetHeight = Math.max(minHeight, currentSection?.scrollHeight || 0);
-
-  let neighborIndex = null;
-  if (dragPercent < 0 && currentIndex < viewOrder.length - 1) {
-    neighborIndex = currentIndex + 1;
-  } else if (dragPercent > 0 && currentIndex > 0) {
-    neighborIndex = currentIndex - 1;
-  }
-
-  if (neighborIndex !== null) {
-    const neighborSection = tabs[viewOrder[neighborIndex]];
-    targetHeight = Math.max(targetHeight, neighborSection?.scrollHeight || 0);
-  }
-
-  track.style.height = `${targetHeight}px`;
-}
-
-function onPointerDown(event) {
-  if (!viewport) return;
-  if (event.pointerType !== 'touch' && event.pointerType !== 'pen') return;
-
-  gesture.pointerId = event.pointerId;
-  gesture.startX = event.clientX;
-  gesture.startY = event.clientY;
-  gesture.deltaX = 0;
-  gesture.deltaY = 0;
-  gesture.orientation = null;
-  gesture.isDragging = false;
-  gesture.activeIndex = viewOrder.indexOf(active);
-}
-
-function onPointerMove(event) {
-  if (gesture.pointerId !== event.pointerId) return;
-  if (gesture.orientation === 'vertical') return;
-
-  const dx = event.clientX - gesture.startX;
-  const dy = event.clientY - gesture.startY;
-  gesture.deltaX = dx;
-  gesture.deltaY = dy;
-
-  if (!gesture.orientation) {
-    if (Math.abs(dx) >= SWIPE_TOUCH_SLOP || Math.abs(dy) >= SWIPE_TOUCH_SLOP) {
-      if (Math.abs(dx) > Math.abs(dy)) {
-        gesture.orientation = 'horizontal';
-        gesture.isDragging = true;
-        track.style.transition = 'none';
-        viewport.setPointerCapture?.(event.pointerId);
-      } else {
-        gesture.orientation = 'vertical';
-        return;
-      }
-    } else {
-      return;
-    }
-  }
-
-  if (!gesture.isDragging) return;
-
-  event.preventDefault();
-
-  const width = viewport.offsetWidth || window.innerWidth || 1;
-  let dragPercent = (dx / width) * 100;
-
-  const atFirst = gesture.activeIndex === 0;
-  const atLast = gesture.activeIndex === viewOrder.length - 1;
-
-  if ((atFirst && dragPercent > 0) || (atLast && dragPercent < 0)) {
-    dragPercent *= 0.25;
-  }
-
-  const translate = gesture.activeIndex * -100 + dragPercent;
-  track.style.transform = `translateX(${translate}%)`;
-
-  adjustDuringDrag(dragPercent);
-}
-
-function finalizeDrag() {
-  const width = viewport.offsetWidth || window.innerWidth || 1;
-  const threshold = width * SWIPE_THRESHOLD_RATIO;
-  const deltaX = gesture.deltaX;
-  const base = gesture.activeIndex * -100;
-
-  track.style.removeProperty('transition');
-
-  if (Math.abs(deltaX) > threshold) {
-    if (deltaX < 0 && gesture.activeIndex < viewOrder.length - 1) {
-      goToRelativeView(1);
-      return;
-    }
-    if (deltaX > 0 && gesture.activeIndex > 0) {
-      goToRelativeView(-1);
-      return;
-    }
-  }
-
-  track.style.transform = `translateX(${base}%)`;
-  syncViewportHeight(active);
-}
-
-function onPointerUp(event) {
-  if (gesture.pointerId !== event.pointerId) return;
-
-  if (viewport?.hasPointerCapture?.(event.pointerId)) {
-    viewport.releasePointerCapture(event.pointerId);
-  }
-
-  if (gesture.isDragging) {
-    finalizeDrag();
-  }
-
-  resetGesture();
-}
-
-function onPointerCancel(event) {
-  if (gesture.pointerId !== event.pointerId) return;
-
-  if (viewport?.hasPointerCapture?.(event.pointerId)) {
-    viewport.releasePointerCapture(event.pointerId);
-  }
-
-  if (gesture.isDragging) {
-    track.style.removeProperty('transition');
-    const base = gesture.activeIndex * -100;
-    track.style.transform = `translateX(${base}%)`;
-    syncViewportHeight(active);
-  }
-
-  resetGesture();
-}
-
-if (viewport) {
-  viewport.addEventListener('pointerdown', onPointerDown, { passive: true });
-  viewport.addEventListener('pointermove', onPointerMove, { passive: false });
-  viewport.addEventListener('pointerup', onPointerUp, { passive: true });
-  viewport.addEventListener('pointercancel', onPointerCancel, { passive: true });
+  track.style.setProperty('--active-index', startIndex);
 }
 
 // Projects loader
@@ -384,9 +207,7 @@ function renderProjects(projects) {
     }
 
     card.addEventListener('click', () => openProject(project));
-    card.addEventListener('keypress', e => {
-      if (e.key === 'Enter') openProject(project);
-    });
+    card.addEventListener('keypress', e => { if (e.key === 'Enter') openProject(project); });
 
     projectsGrid.appendChild(card);
   });
