@@ -8,9 +8,12 @@ const tabs = viewOrder.reduce((acc, view) => {
 }, {});
 let active = null;
 const FOCUS_DELAY = 250;
+let resizeFrame = null;
+
+const header = document.querySelector('.site-header');
+const footer = document.querySelector('.site-footer');
 
 // Header hide/show on scroll
-const header = document.querySelector('.site-header');
 let lastScrollY = window.scrollY;
 let scrollTicking = false;
 const SCROLL_DELTA = 6;
@@ -37,7 +40,7 @@ window.addEventListener('scroll', () => {
   }
 });
 
-// Modal refs (same as before)
+// Modal refs
 const modal = document.getElementById('project-modal');
 const modalTitle = modal.querySelector('.modal-title');
 const modalYear = modal.querySelector('.modal-year');
@@ -50,19 +53,50 @@ let currentProject = null;
 // Projects refs
 const projectsGrid = document.getElementById('projects-grid');
 
+function getMinViewportHeight() {
+  const viewportHeight = window.innerHeight;
+  const headerHeight = header?.offsetHeight ?? 0;
+  const footerHeight = footer?.offsetHeight ?? 0;
+  return Math.max(0, viewportHeight - headerHeight - footerHeight);
+}
+
+function syncViewportHeight(view) {
+  if (!track) return;
+  const section = tabs[view];
+  if (!section) return;
+
+  const minHeight = getMinViewportHeight();
+
+  Object.values(tabs).forEach(tab => {
+    if (tab) tab.style.minHeight = '';
+  });
+
+  section.style.minHeight = `${minHeight}px`;
+
+  const applyHeight = () => {
+    const measuredHeight = section.scrollHeight;
+    const targetHeight = Math.max(measuredHeight, minHeight);
+    track.style.height = `${targetHeight}px`;
+  };
+
+  applyHeight();
+  requestAnimationFrame(applyHeight);
+}
+
 function setActive(view, push = true) {
   if (!track || !tabs[view] || view === active) return;
 
   const index = viewOrder.indexOf(view);
   if (index === -1) return;
 
-  // Ensure header is visible when navigating programmatically
   document.body.classList.remove('header-hidden');
-
-  track.style.setProperty('--active-index', index);
 
   updateNavTabs(view);
   updateViewStates(view);
+
+  track.style.setProperty('--active-index', index);
+  syncViewportHeight(view);
+
   active = view;
 
   if (push) {
@@ -121,7 +155,6 @@ function initRouter() {
   });
 }
 
-// Sliding styles driven by CSS variable
 function initTrack() {
   if (!track) return;
   const hashView = location.hash.replace('#', '');
@@ -129,7 +162,7 @@ function initTrack() {
   track.style.setProperty('--active-index', startIndex);
 }
 
-// Load projects (from your existing projects.js logic, trimmed and adapted)
+// Projects loader
 async function loadProjects() {
   if (!projectsGrid) return;
   try {
@@ -146,6 +179,9 @@ async function loadProjects() {
         <p>Check the console (Developer Tools) for details and ensure projects.json is correctly formatted.</p>
       </article>
     `;
+    if (active === 'projects') {
+      requestAnimationFrame(() => syncViewportHeight('projects'));
+    }
     console.error(error);
   }
 }
@@ -175,6 +211,10 @@ function renderProjects(projects) {
 
     projectsGrid.appendChild(card);
   });
+
+  if (active === 'projects') {
+    requestAnimationFrame(() => syncViewportHeight('projects'));
+  }
 }
 
 async function openProject(project) {
@@ -251,6 +291,12 @@ window.addEventListener('keydown', event => {
   if (event.key === 'Escape' && modal.getAttribute('aria-hidden') === 'false') {
     toggleModal(false);
   }
+});
+
+window.addEventListener('resize', () => {
+  if (!active) return;
+  if (resizeFrame) cancelAnimationFrame(resizeFrame);
+  resizeFrame = requestAnimationFrame(() => syncViewportHeight(active));
 });
 
 // Init
