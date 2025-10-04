@@ -16,7 +16,7 @@ const footer = document.querySelector('.site-footer');
 // Header hide/show on scroll
 let lastScrollY = window.scrollY;
 let scrollTicking = false;
-const SCROLL_DELTA = 6;
+const SCROLL_DELTA = 3;
 
 function updateHeaderOnScroll() {
   const currentY = window.scrollY;

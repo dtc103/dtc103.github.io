@@ -31,7 +31,7 @@
   --card-columns: 2;
 
   /* Transitions */
-  --transition-base: 180ms ease;
+  --transition-base: 200ms ease;
 }
 
 *,
