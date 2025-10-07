@@ -20,7 +20,7 @@
   --font-sans: "Inter", "SF Pro Display", "Segoe UI", Helvetica, Arial, sans-serif;
 
   /* Layout */
-  --max-width: 1100px;
+  --max-width: 1500px;
   --gutter: clamp(1.25rem, 4vw, 3rem);
   --radius-lg: 24px;
   --radius-md: 16px;
