@@ -892,3 +892,10 @@ body.header-hidden .site-header {
     scroll-behavior: auto !important;
   }
 }
+
+@media (min-width: 1200px){
+  .modal-content{
+    max-width: 1024px;
+    width: min(100%, 1024px);
+  }
+}

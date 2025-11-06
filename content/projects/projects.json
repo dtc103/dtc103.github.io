@@ -1,6 +1,6 @@
 [
   {
-    "title": "Development and Application of Reflex-Based Muscle Controllers for Locomotion in Quadrupedal Robots",
+    "title": "[Ongoing] Development and Application of Reflex-Based Muscle Controllers for Locomotion in Quadrupedal Robots",
     "summary": "Applying biologically inspired reflex-controllers on emulated muscle actuators for stable locomotion on real robots",
     "year": "2025",
     "tags": ["Biorobotics", "RL", "Motor Control"],
@@ -14,7 +14,7 @@
   },
   {
     "title": "Imitation Learning in Robotics",
-    "summary": "Review essay about current algorithms for imitation learning and its applications in robotics",
+    "summary": "Literature review about current algorithms for imitation learning and its applications in different robotic fields",
     "year": "2025",
     "tags": ["RL", "IL", "Robotics", "Review"],
     "file": "imitation_learning.md",
@@ -24,8 +24,12 @@
           "url": "https://github.com/dtc103/imitation-learning-in-robotics"
         },
         {
-          "label": "PDF",
+          "label": "Thesis PDF",
           "url": "https://github.com/dtc103/imitation-learning-in-robotics/blob/main/Thesis.pdf"
+        },
+        {
+          "label": "Presentation Video",
+          "url": "https://www.youtube.com/watch?v=dtyNhMfptSY"
         }
       ]
   },
@@ -38,16 +42,16 @@
       "links": [
         {
           "label": "Paper",
-          "url": "https://arxiv.org/abs/1234.56789"
+          "url": "https://www.researchgate.net/publication/389801056_iAssistADL_Intelligent_assistive_device_for_patients_with_neuro-_degenerative_movement_disorder_Concepts_and_first_implementations"
         }
       ]
   },
   {
     "title": "Autonomous Mobile Robot",
-    "summary": "Obstacle course from mobile robotics",
+    "summary": "Implementing mobile robot driving through obstacle course",
     "year": "2025",
     "tags": ["Robotics", "ROS2"],
-    "file": "iassist.md",
+    "file": "mobile_robot.md",
       "links": [
         {
           "label": "GitHub",
@@ -57,14 +61,18 @@
   },
   {
     "title": "Differential Robot",
-    "summary": "TODO",
+    "summary": "Self made mobile robotics platform for testing different control strategies",
     "year": "2025",
     "tags": ["Robotics", "DIY", "Optimal Control"],
-    "file": "iassist.md",
+    "file": "diff_robot.md",
       "links": [
         {
           "label": "GitHub",
           "url": "https://github.com/dtc103/robotics-practical"
+        },
+        {
+          "label": "Presentation Video",
+          "url": "https://www.youtube.com/watch?v=TeBSEins49M"
         }
       ]
   },
@@ -87,7 +95,7 @@
   },
   {
     "title": "Simulating Multijoint Upper Limb Movement in Multiple Dimensions Using the Equilibrium Point Control Approach",
-    "summary": "TODO",
+    "summary": "Development of an algorithm for finding equilibrium points in musculoskeletal models for reaching motion and trajectory control",
     "year": "2021",
     "tags": ["Biomechanics", "Musculoskeletal Control", "OpenSim"],
     "file": "eqp_control.md",
@@ -104,18 +112,18 @@
   },
   {
     "title": "Training via Percussion Instruments in Immersive Environment",
-    "summary": "TODO",
+    "summary": "Investigation into the feasibility of virtual-reality-based instrument learning with focus on drumming",
     "year": "2020",
     "tags": ["VR", "Unity", "Immersive Learning"],
     "file": "drum_vr.md",
       "links": [
         {
-          "label": "Preprint",
-          "url": "https://arxiv.org/abs/1234.56789"
+          "label": "GitHub",
+          "url": "https://github.com/dtc103/Bachelor-Forschungsprojekt-INF"
         },
         {
-          "label": "Talk Slides",
-          "url": "https://yourdomain.com/slides/graph-collaboration.pdf"
+          "label": "Thesis PDF",
+          "url": "https://github.com/dtc103/Bachelor-Forschungsprojekt-INF/blob/master/BFP_Ausarbeitung_AyguenBareissBosseckerKernerMayer.pdf"
         }
       ]
   }
