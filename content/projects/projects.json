@@ -84,12 +84,12 @@
     "file": "muscle_actuator.md",
       "links": [
         {
-          "label": "Preprint",
-          "url": "https://arxiv.org/abs/1234.56789"
+          "label": "GitHub",
+          "url": "https://github.com/dtc103/Control-emulated-muscles-untiree-go2"
         },
         {
-          "label": "Talk Slides",
-          "url": "https://yourdomain.com/slides/graph-collaboration.pdf"
+          "label": "PDF",
+          "url": "https://github.com/dtc103/Control-emulated-muscles-untiree-go2/blob/main/Thesis.pdf"
         }
       ]
   },
@@ -101,12 +101,12 @@
     "file": "eqp_control.md",
       "links": [
         {
-          "label": "Preprint",
-          "url": "https://arxiv.org/abs/1234.56789"
+          "label": "GitHub",
+          "url": "https://github.com/dtc103/equilibrium-point-control"
         },
         {
-          "label": "Talk Slides",
-          "url": "https://yourdomain.com/slides/graph-collaboration.pdf"
+          "label": "PDF",
+          "url": "https://github.com/dtc103/equilibrium-point-control/blob/main/Thesis.pdf"
         }
       ]
   },
@@ -122,7 +122,7 @@
           "url": "https://github.com/dtc103/Bachelor-Forschungsprojekt-INF"
         },
         {
-          "label": "Thesis PDF",
+          "label": "PDF",
           "url": "https://github.com/dtc103/Bachelor-Forschungsprojekt-INF/blob/master/BFP_Ausarbeitung_AyguenBareissBosseckerKernerMayer.pdf"
         }
       ]
