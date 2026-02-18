@@ -1,6 +1,6 @@
 [
   {
-    "title": "[Ongoing] Development and Application of Reflex-Based Muscle Controllers for Locomotion in Quadrupedal Robots",
+    "title": "Development and Application of Reflex-Based Muscle Controllers for Locomotion in Quadrupedal Robots",
     "summary": "Applying biologically inspired reflex-controllers on emulated muscle actuators for stable locomotion on real robots",
     "year": "2025",
     "tags": ["Biorobotics", "RL", "Motor Control"],
